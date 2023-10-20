@@ -1,0 +1,791 @@
+  SQL / PL-SQL Notes
+=======================
+ 
+CREATE TABLE IF NOT EXISTS `student` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+ 
+CREATE TABLE IF NOT EXISTS `department` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+ 
+CREATE TABLE IF NOT EXISTS `course` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  `fee` DOUBLE NULL,
+  `department_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `department_id`) )
+ENGINE = InnoDB;
+
+ 
+CREATE TABLE IF NOT EXISTS  `instructor` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `city` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+ 
+CREATE TABLE IF NOT EXISTS `student_course` (
+  `student_id` INT NOT NULL,
+  `course_id` INT NOT NULL,
+  `date_of_enrollment` DATE NULL,
+  PRIMARY KEY (`student_id`, `course_id`) 
+  )
+ENGINE = InnoDB;
+
+ 
+CREATE TABLE IF NOT EXISTS `course_instructor` (
+  `course_id` INT NOT NULL,
+  `instructor_id` INT NOT NULL,
+  PRIMARY KEY (`course_id`, `instructor_id`) )
+ENGINE = InnoDB;
+ 
+==========================================================
+
+SQL Queries 
+
+Single table Queries
+====================
+select 
+from 
+where 
+
+select 
+from 
+where
+group by  -- Aggregate functions / Grouping functions 
+having
+order by 
+limit 
+ 
+Multi Table Queries
+===================
+Manual Mapping
+Joins
+Nested Query 
+
+Section: PL/SQL 
+
++--------------------------+
+| Tables_in_hex_fsd_oct_v1 |
++--------------------------+
+| course                   |
+| course_instructor        |
+| department               |
+| instructor               |
+| student                  |
+| student_course           |
++--------------------------+
+
+
+Inserts
+=======
+
+insert into student(name,city) values
+('harry potter','london'),
+('ronald weasley','surrey'),
+('hermione granger','london');
+
+
+insert into course (name,fee,department_id) values
+('java_programming',12000,1),
+('reactjs',8000,2),
+('mysql',5000,1);
+
+insert into student_course values
+(1,1,'2023-01-01'),
+(1,2,'2023-01-01'),
+(2,2,'2023-01-10'),
+(3,1,'2023-01-05'),
+(3,2,'2023-01-05');
+
+insert into instructor (name,city) values
+('albus dumbledore','hogwards'),
+('severus snape','hogwards');
+
+
+
+insert into course_instructor values
+(1,1),
+(2,2),
+(1,3),
+(2,3);
+
+
+Q. Display the courses that belong to department 'backend'. 
+
+Query: Projection(display): courses, Selection(Condition) : department 
+
+select c.id,c.name 
+from course c, department d 
+where c.department_id = d.id AND 
+d.name='backend'
+
+
+Q. Display the students record that have enrolled in course 'java_programming'
+
+select s.id,s.name,s.city, c.name, c.fee, sc.date_of_enrollment
+from student s,student_course sc,course c
+where s.id = sc.student_id 
+AND sc.course_id = c.id 
+AND c.name = 'java_programming' 
+
++----+------------------+--------+------------------+-------+--------------------+
+| id | name             | city   | name             | fee   | date_of_enrollment |
++----+------------------+--------+------------------+-------+--------------------+
+|  1 | harry potter     | london | java_programming | 12000 | 2023-01-01         |
+|  3 | hermione granger | london | java_programming | 12000 | 2023-01-05         |
++----+------------------+--------+------------------+-------+--------------------+
+
+Q. Display instructor (id,name) teaching course 'reactjs'. 
+
+
+Q. Display student names that are being taught by instructor 'albus dumbledore'
+
+select s.name
+from student s,student_course sc,course c,course_instructor ci, instructor i
+where s.id = sc.student_id 
+AND sc.course_id = c.id
+AND c.id = ci.course_id
+AND ci.instructor_id = i.id
+AND i.name='albus dumbledore'
+
+
+Q. Count Number of Students associated with each department. 
+
+select *
+from student s,student_course sc,course c, department d
+where s.id = sc.student_id 
+AND sc.course_id = c.id
+AND c.department_id = d.id 
+
++----+------------------+------------+-----------+----+------------------+---------------+----+----------+
+| id | name             | student_id | course_id | id | name             | department_id | id | name     |
++----+------------------+------------+-----------+----+------------------+---------------+----+----------+
+|  1 | harry potter     |          1 |         1 |  1 | java_programming |             1 |  1 | backend  |
+|  3 | hermione granger |          3 |         1 |  1 | java_programming |             1 |  1 | backend  |
+|  1 | harry potter     |          1 |         2 |  2 | reactjs          |             2 |  2 | frontend |
+|  2 | ronald weasley   |          2 |         2 |  2 | reactjs          |             2 |  2 | frontend |
+|  3 | hermione granger |          3 |         2 |  2 | reactjs          |             2 |  2 | frontend |
++----+------------------+------------+-----------+----+------------------+---------------+----+----------+
+
+group by d.name
+
+group: backend
+|  1 | harry potter     |          1 |         1 |  1 | java_programming |             1 |  1 | backend  |
+|  3 | hermione granger |          3 |         1 |  1 | java_programming |             1 |  1 | backend  |
+
+group: frontend
+|  1 | harry potter     |          1 |         2 |  2 | reactjs          |             2 |  2 | frontend |
+|  2 | ronald weasley   |          2 |         2 |  2 | reactjs          |             2 |  2 | frontend |
+|  3 | hermione granger |          3 |         2 |  2 | reactjs          |             2 |  2 | frontend |
+
+select d.name as dept_name, count(s.id) as number_of_students  
+from student s,student_course sc,course c, department d
+where s.id = sc.student_id 
+AND sc.course_id = c.id
+AND c.department_id = d.id 
+group by d.name
+having count(s.id) > 0
+order by count(s.id) DESC
+limit 0,10 
+
+10,20
+20,30
+size: 10 : pagination 
+
+SQL: 
++-----------+--------------------+
+| dept_name | number_of_students |
++-----------+--------------------+
+| frontend  |                  3 |
++-----------+--------------------+
+
+
+Q. Count number of Students Associated with each instructor. 
+
+Association Rule: If a student is enrolled in say course which is taught by instructor then
+student is associated with instructor
+
+
+select i.name,count(s.id) as no_students
+from student s,student_course sc,course c,course_instructor ci,instructor i
+where s.id=sc.student_id
+AND sc.course_id=c.id
+AND c.id=ci.course_id
+AND ci.instructor_id=i.id
+group by i.name
+order by count(s.id);
+
+
+Split in group of 2 participants:
+each group will get a Project Case study to implement. 
+After every week, they will be having mini demo of the work they have done. 
+On daily basis, each group will have technical discussion with the training from 4.15-6 pm 
+
+Project Titles
+=================
+1. Airline Reservation System
+2. Ecommerce System 
+3. Financial Planning System 
+4. Inventory Management System 
+5. Logistics System 
+6. Online Banking System 
+7. Hospital Management System 
+8. Employee Time Sheet and Project Management System 
+9. Hotel Booking System 
+10. Car Rental System
+11. Bus Ticket Booking 
+12. LMS: Trainer: Imtiyaz LIVE 
+13. Library Management System 
+14. 
+15. 
+
+Beyond Training Hours: 4.15-6PM : doubts, resolve errors, technical discussion.  : Daily Sprint Call. 
+
+Joins 
+=====
+- Inner join / Natural Join / join 
+- Left join / left outer join 
+- right join / right outer join 
+- full outer join(made up)
+
+
+- Inner join / Natural Join / join 
+
+
+Q. Display the courses that belong to department 'backend'. 
+
+select c.id,c.name,d.name
+from course c join department d ON c.department_id=d.id 
+where d.name='backend';
+
+Q. Display the students record that have enrolled in course 'java_programming'
+
+select s.id,s.name,c.name 
+from student s 
+JOIN student_course sc ON s.id = sc.student_id 
+JOIN course c ON sc.course_id = c.id 
+where c.name='java_programming'
+
++----+------------------+------------------+
+| id | name             | name             |
++----+------------------+------------------+
+|  1 | harry potter     | java_programming |
+|  3 | hermione granger | java_programming |
++----+------------------+------------------+
+
+select s.id,s.name,c.name 
+from student s 
+INNER JOIN student_course sc ON s.id = sc.student_id 
+INNER JOIN course c ON sc.course_id = c.id 
+where c.name='java_programming'
+
+
+Q. Display instructor (id,name) teaching course 'reactjs'. 
+
+select i.id,i.name,c.name
+     from instructor i
+     join course_instructor ci on i.id=ci.instructor_id
+     join course c on ci.course_id=c.id
+     where c.name='reactjs';
+
+Q. Display student names that are being taught by instructor 'albus dumbledore'
+
+ 
+
+select s.name , i.name 
+
+from student s
+
+join student_course sc on s.id=sc.student_id
+
+join course c on sc.course_id=c.id
+
+join course_instructor ci on c.id=ci.course_id
+
+join instructor i on ci.instructor_id=i.id
+
+where i.name='albus dumbledore' 
+
+ 
+
+Q. Count Number of Students associated with each department. 
+
+Manual Mapping: 
+---------------
+select i.name,count(s.id) as no_students
+from student s,student_course sc,course c,course_instructor ci,instructor i
+where s.id=sc.student_id
+AND sc.course_id=c.id
+AND c.id=ci.course_id
+AND ci.instructor_id=i.id
+group by i.name
+order by count(s.id);
+
+Join: 
+-----
+select d.name as dept_name,count(s.id) as number_of_students
+from student s
+join student_course sc on s.id=sc.student_id
+join course c on sc.course_id=c.id
+join department d on c.department_id=d.id
+group by d.name 
+having count(s.id)>0
+order by count(s.id) desc
+limit 10;
+
+
+Operator(=, IN, NOT IN, EXISTS)
+
+query 1
+  = (query 2 
+     = (query 3
+	=(query 4)))
+
+Execution Order
+===============
+query 4 = R1
+
+query 1
+  = (query 2 
+     = (query 3
+	=(R1)))
+
+query 3 = R2
+
+query 1
+  = (query 2 
+     = (R2))
+
+query 2 = R3
+
+query 1
+  = (R3)
+
+Q. Display the courses that belong to department 'backend'.
+
+
+select id,name,fee
+from course
+where department_id IN (select id 
+		       from department
+		       where name='backend');
+
+Execution Simulation
+====================
+select id 
+from department
+where name='backend' = 1
+
+
+select id,name,fee
+from course
+where department_id IN (1)
+
++----+------------------+-------+
+| id | name             | fee   |
++----+------------------+-------+
+|  1 | java_programming | 12000 |
+|  3 | mysql            |  5000 |
++----+------------------+-------+
+
+Q. Display the students record that have enrolled in course 'java_programming'.
+
+select id,name
+from student
+where id IN (select student_id 
+             from student_course
+             where course_id IN (select id 
+                                 from course 
+                                 where name='java_programming'))
+
++----+------------------+
+| id | name             |
++----+------------------+
+|  1 | harry potter     |
+|  3 | hermione granger |
++----+------------------+
+
+Q. Display instructor (id,name) teaching course 'java_programming'. 
+
+select id,name
+from instructor
+where id in (select instructor_id
+		from course_instructor
+		where course_id in (select id
+					from course
+					where name='java_programming'));
+
+
+Q. Display student names that are being taught by instructor 'albus dumbledore' and who live in city 'london'.
+
+select name
+from student
+where city='london' AND id IN (select student_id 
+                               from student_course
+                               where course_id IN (select id 
+                                                   from course 
+                                                   where id IN (select course_id
+                                                                from course_instructor 
+                                                                where instructor_id IN (select id 
+                                                                                        from instructor
+                                                                                        where name='albus dumbledore' ))))
+
++------------------+
+| name             |
++------------------+
+| harry potter     |
+| hermione granger |
++------------------+
+
+
+LEFT & RIght JOIN 
+==================
+create table product(id int, title varchar(255), price double, vendor_id int);
+
+create table vendor(id int,name varchar(255));
+
+insert into vendor values (1,'ABC Electronics'), (2, 'PQR Electronics'),(3,'XYZ Electronics');
+
+insert into product values
+(1, 'Oppo mobile',18000,1),
+(2,'Apple Iphone 13', 40000, 2),
+(3, 'Samsum A3',23000,null);
+
+INNER JOIN
+----------
+mysql> select p.title,v.name
+    -> from product p JOIN vendor v ON p.vendor_id = v.id;
++-----------------+-----------------+
+| title           | name            |
++-----------------+-----------------+
+| Oppo mobile     | ABC Electronics |
+| Apple Iphone 13 | PQR Electronics |
++-----------------+-----------------+
+
+LEFT JOIN
+---------
+mysql> select p.title,v.name
+    -> from product p LEFT JOIN vendor v ON p.vendor_id = v.id;
++-----------------+-----------------+
+| title           | name            |
++-----------------+-----------------+
+| Oppo mobile     | ABC Electronics |
+| Apple Iphone 13 | PQR Electronics |
+| Samsum A3       | NULL            |
++-----------------+-----------------+
+3 rows in set (0.00 sec)
+
+RIGHT JOIN
+----------
+mysql> select p.title,v.name
+    -> from product p RIGHT JOIN vendor v ON p.vendor_id = v.id;
++-----------------+-----------------+
+| title           | name            |
++-----------------+-----------------+
+| Oppo mobile     | ABC Electronics |
+| Apple Iphone 13 | PQR Electronics |
+| NULL            | XYZ Electronics |
++-----------------+-----------------+
+
+UNION LEFT + RIGHT
+------------------
+
+mysql> select p.title,v.name
+    -> from product p LEFT JOIN vendor v ON p.vendor_id = v.id
+    -> UNION
+    -> select p.title,v.name
+    -> from product p RIGHT JOIN vendor v ON p.vendor_id = v.id;
++-----------------+-----------------+
+| title           | name            |
++-----------------+-----------------+
+| Oppo mobile     | ABC Electronics |
+| Apple Iphone 13 | PQR Electronics |
+| Samsum A3       | NULL            |
+| NULL            | XYZ Electronics |
++-----------------+-----------------+
+
+RANK Function
+=============
+create table product (id int, title varchar(255), category varchar(255), price double, rating double);
+ 
+insert into product values
+(1, 'Oppo A13', 'mobiles', 18000, 4.6),
+ (2, 'Apple Iphone 13','mobiles',34000,4.5),
+ (3, 'HP Lazer 3','laptops',67000,4.2),
+(4, 'Macbook Air M1', 'laptops', 69000, 4.8),
+(5, 'Senhiesers Headset 5', 'headphones', 2100, 4.6),
+(6, 'philips earphones', 'headphones',450,4.5),
+(7, 'OnePhus CE 3','mobiles',20000,4.4);
+
+
+select title,category,rating,rank() 
+	over (partition by category order by rating DESC)  as product_rank
+from product;
+
+Alternative 
+
+select title, category,rating, rank() OVER w AS 'r'
+from product
+WINDOW w AS (partition by category order by rating DESC)
+
+
+Output:
+------
+title			category	rating	product_rank
+Senhiesers Headset 5	headphones	4.6	1
+philips earphones	headphones	4.5	2
+Macbook Air M1		laptops		4.8	1
+HP Lazer 3		laptops		4.2	2
+Oppo A13		mobiles		4.6	1
+Apple Iphone 13		mobiles		4.5	2
+OnePhus CE 3		mobiles		4.4	3
+
+
+PL/SQL
+======
+create table employee(id int primary key auto_increment, name varchar(255), salary double, department varchar(255), city varchar(255));
+
+insert into employee (name,salary,department,city) values
+('harry potter', 85000, 'TECH', 'mumbai'),
+('ronald weasley', 75000, 'ADMIN', 'chennai'),
+('hermione granger', 95000, 'SALES', 'mumbai'),
+('draco malfoy', 80000,'TECH', 'pune'),
+('neville longbottom', 60000, 'ADMIN', 'chennai');
+
+
+Q. Create a procedure to display all employee records. 
+
+DELIMITER $$
+
+create procedure all_employees()
+BEGIN
+ select * from employee;  
+END
+$$
+
+DELIMITER ;
+CALL all_employees();
+
+Q. Cap to display employee info on the basis of ID given as input. 
+
+DELIMITER $$
+
+create procedure get_employee_by_id(IN eid int)
+BEGIN
+ select id,name,department from employee where id=eid;
+END
+$$
+
+CALL get_employee_by_id(1)
+
+Note: To see the list of stored procedures we use 
+show procedure status; 
+
+Q. cap to display employee on the basis of branch(input) and salary > n(input). limit the record to l(input). 
+
+create procedure fetch_employee(IN idepartment text, IN isalary double, IN ilimit int)
+BEGIN
+ select id, name, department, salary
+ from employee 
+ where department = idepartment AND salary > isalary 
+ limit ilimit;
+END
+$$
+
+CALL fetch_employee('TECH', 78000,1);
+
+Note: To drop the proc: 
+drop procedure fetch_employee;
+
+Q. cap by computing the sum of salaries of all employees and give the result as a variable as output. 
+
+
+create procedure emp_salary_sum(OUT osalary double)
+BEGIN
+ select SUM(salary) into osalary
+ from employee; 
+END
+$$
+
+call emp_salary_sum(@sal) $$
+
+select @sal $$
+
++--------+
+| @sal   |
++--------+
+| 395000 |
++--------+
+
+Q. CAP to perform increment operation based on following criteria: 
+
+department	Increment
+----------	---------
+ TECH		   8%
+ ADMIN		   6%
+ SALES	 	   10%
+
+create procedure emp_update_sal(IN eid int) 
+BEGIN
+  DECLARE 
+    dept varchar(255); 
+    
+	select department into dept 
+        from employee
+        where id=eid; 
+
+    if dept  = 'TECH' then 
+	update employee SET salary = salary * 1.08 where id= eid;
+    ELSEIF dept =  'ADMIN' then
+	update employee SET salary = salary * 1.06 where id= eid;    
+    ELSE  
+	update employee SET salary = salary * 1.10 where id= eid; 
+    END if; 
+END
+$$
+
+LOOPS in MySQL PL/SQL
+=====================
+Q. PL/SQL for while loop 
+
+result = 1,2,3,4,5.....
+
+create procedure while_demo(IN n int)
+BEGIN
+ declare i int;
+ declare result text;
+ SET i=1;
+ SET result = '';
+ 
+ while i<=n DO
+    SET result = CONCAT(result,i,',');
+    SET i = i+1;
+ END while; 
+
+ select result;
+END
+$$
+
+Q. CAP to display all IDs of table employee. 
+
+create procedure all_ids()
+BEGIN
+ declare tbl_length int;
+ declare i int;
+ 
+ select count(id) into tbl_length from employee;  
+ set i=0; 
+ 
+ while i<tbl_length do
+   select id from employee limit i,1;
+   set i=i+1;
+ end while; 
+END
+$$
+
+Assignment 1: 
+------------
+Q. CAP to perform increment operation on all employee records based on following criteria: 
+
+department	Increment
+----------	---------
+ TECH		   8%
+ ADMIN		   6%
+ SALES	 	   10%
+
+DDLs/DMLs:
+----------
+create table employee(id int primary key auto_increment, 
+  name varchar(255), salary double, department varchar(255), 
+  city varchar(255));
+  
+  insert into employee (name,salary,department,city) values
+('harry potter', 85000, 'TECH', 'mumbai'),
+('ronald weasley', 75000, 'ADMIN', 'chennai'),
+('hermione granger', 95000, 'SALES', 'mumbai'),
+('draco malfoy', 80000,'TECH', 'pune'),
+('neville longbottom', 60000, 'ADMIN', 'chennai');
+
+
+Views in MySql
+==============
+mysql> create view employee_view
+    -> AS
+    -> select id,name,department,city
+    -> from employee
+    -> order by salary ASC;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from employee_view;
++----+--------------------+------------+---------+
+| id | name               | department | city    |
++----+--------------------+------------+---------+
+|  5 | neville longbottom | ADMIN      | chennai |
+|  2 | ronald weasley     | ADMIN      | chennai |
+|  4 | draco malfoy       | TECH       | pune    |
+|  1 | harry potter       | TECH       | mumbai  |
+|  3 | hermione granger   | SALES      | mumbai  |
++----+--------------------+------------+---------+
+5 rows in set (0.01 sec)
+
+
+
+Sprint Call
+-----------
+Trainer: Select a already existing project and use it as reference. 
+Study the system functionalities in detail. 
+
+Mr. Akshay: 
+-> We can use the tools for creating UX and initial flow of the project
+
+Ms. Karishma: 
+-> We must first identify CORE functionalities of our project 
+
+Core Functionalities(Mandatory for all projects)
+• User Registration and Authentication 
+• User Profiles and History
+• Search and Filters: Implement a search feature with auto-suggestion
+• Reviews and Ratings**
+• Any Notifications via email – Using Google SMPT
+
+
+
+Order Story Flow:  
+------------
+Company Executive(Iplanet) ---> place order(Iphone 15: 100) ---> Supplier (Redington) 
+
+Supplier --> deliver --> designated Warehouse (Mumbai,Chennai)
+
+Manager(Warehouse) --> checks and confirms --> Shipment(making sure products are fine)  
+
+Purchase Story Flow
+----------------
+Customer --> buy --> product 
+Warehouse --> ship the product --> Logistics company 
+
+Maintain product counts
+
+Onboard Employee --> 
+Create Project --> 
+Assign Project to Employee --> 
+Give options to log work on daily basis --> 
+Split 1 Project into Multiple tasks and assign those tasks to employees --> 
+
+
+
+
+
+
+
+
+
+
