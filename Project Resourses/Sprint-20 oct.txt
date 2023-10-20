@@ -1,0 +1,72 @@
+
+
+Sprint Call
+-----------
+
+Split in group of 2 participants:
+each group will get a Project Case study to implement. 
+After every week, they will be having mini demo of the work they have done. 
+On daily basis, each group will have technical discussion with the training from 4.15-6 pm 
+
+Project Titles
+=================
+1. Airline Reservation System
+2. Ecommerce System 
+3. Financial Planning System 
+4. Inventory Management System 
+5. Logistics System 
+6. Online Banking System 
+7. Hospital Management System 
+8. Employee Time Sheet and Project Management System 
+9. Hotel Booking System 
+10. Car Rental System
+11. Bus Ticket Booking 
+12. LMS: Trainer: Imtiyaz LIVE 
+13. Library Management System 
+  
+
+Beyond Training Hours: 4.15-6PM : doubts, resolve errors, technical discussion.  : Daily Sprint Call. 
+
+
+
+Trainer: Select a already existing project and use it as reference. 
+Study the system functionalities in detail. 
+
+Mr. Akshay: 
+-> We can use the tools for creating UX and initial flow of the project
+
+Ms. Karishma: 
+-> We must first identify CORE functionalities of our project 
+
+Core Functionalities(Mandatory for all projects)
+• User Registration and Authentication 
+• User Profiles and History
+• Search and Filters: Implement a search feature with auto-suggestion
+• Reviews and Ratings**
+• Any Notifications via email – Using Google SMPT
+
+
+
+Order Story Flow:  
+------------
+Company Executive(Iplanet) ---> place order(Iphone 15: 100) ---> Supplier (Redington) 
+
+Supplier --> deliver --> designated Warehouse (Mumbai,Chennai)
+
+Manager(Warehouse) --> checks and confirms --> Shipment(making sure products are fine)  
+
+Purchase Story Flow
+----------------
+Customer --> buy --> product 
+Warehouse --> ship the product --> Logistics company 
+
+Maintain product counts
+
+Onboard Employee --> 
+Create Project --> 
+Assign Project to Employee --> 
+Give options to log work on daily basis --> 
+Split 1 Project into Multiple tasks and assign those tasks to employees --> 
+
+
+
