@@ -2,6 +2,7 @@ package com.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.model.Employee;
@@ -43,9 +44,28 @@ public class EmployeeRepository {
 	}
 
 	public void insertEmployee(Employee employee) {
+		dbConnect();
 		// Query to insert the record in DB
-		
+		String sql="insert into employee(name,department,salary) values (?,?,?)"; //parameterized query
+		/* Prepare to execute Query */
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, employee.getName());
+			pstmt.setString(2, employee.getDepartment());
+			pstmt.setDouble(3, employee.getSalary());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		dbClose();
 	}
 	
-	
+	//Note: Parameterized queries protect us from SQL injections attack. 
 }
+
+/* 
+ * 2 Methods: 
+ * executeQuery(): select - fetching something from DB 
+ * executeUpdate(): update,delete,insert  
+ * 
+ */
