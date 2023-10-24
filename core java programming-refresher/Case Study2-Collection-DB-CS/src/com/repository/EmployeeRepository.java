@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.model.Employee;
+
 public class EmployeeRepository {
 	private String userDb="root";
 	private String passwordDb="";
@@ -38,6 +40,11 @@ public class EmployeeRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void insertEmployee(Employee employee) {
+		// Query to insert the record in DB
+		
 	}
 	
 	

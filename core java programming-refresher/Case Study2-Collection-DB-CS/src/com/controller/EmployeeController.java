@@ -2,12 +2,15 @@ package com.controller;
 
 import java.util.Scanner;
 
+import com.model.Employee;
 import com.service.EmployeeService;
 
 public class EmployeeController {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		EmployeeService employeeService = new EmployeeService();
+		Employee employee = new Employee(); 
+		
 		while(true) {
 			System.out.println("*******Employee Ops**********");
 			System.out.println("1. Insert Employee");
@@ -23,9 +26,16 @@ public class EmployeeController {
 			
 			switch(input) {
 			case 1: 
-				//Insert Employee
-				employeeService.dbTest();
-				System.out.println("Insert Employee");
+				//Insert Employee: Take input from user.
+				System.out.println("Enter employee name");
+				employee.setName(sc.next());
+				System.out.println("Enter employee department");
+				employee.setDepartment(sc.next());
+				System.out.println("Enter employee salary");
+				employee.setSalary(sc.nextDouble());
+				/* Pass this employee to Service */
+				employeeService.insertEmployee(employee);
+				System.out.println("Employee record inserted..");
 				break; 
 			case 2: 
 				//View all Employees
