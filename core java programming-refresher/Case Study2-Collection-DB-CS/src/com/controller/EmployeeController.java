@@ -3,6 +3,7 @@ package com.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import com.exception.InvalidIdException;
 import com.model.Employee;
 import com.service.EmployeeService;
 
@@ -48,7 +49,15 @@ public class EmployeeController {
 				break;
 			case 3: 
 				//Delete an Employee
-				System.out.println("Delete an Employee");
+				System.out.println("Enter ID to delete record");
+				int id = sc.nextInt();
+				try {
+					employeeService.validateId(id);
+					employeeService.deleteEmployee(id);
+					System.out.println("Your record is deleted..");
+				} catch (InvalidIdException e1) {
+					 System.out.println(e1.getMessage());
+				}
 				break; 
 			default: 
 				System.out.println("Invalid input, Try again..");

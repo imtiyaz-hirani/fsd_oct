@@ -69,8 +69,7 @@ public class EmployeeRepository {
 		List<Employee> list = new ArrayList<>();
 		try {
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			ResultSet rst = pstmt.executeQuery();
-			
+			ResultSet rst = pstmt.executeQuery();	
 			while(rst.next()) {
 				int id = rst.getInt("id");
 				String name = rst.getString("name");
@@ -88,9 +87,23 @@ public class EmployeeRepository {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		dbClose();
 		return list;
+	}
+
+	public void deleteEmployee(int id) {
+		dbConnect();
+		String sql="delete from employee where id=?";
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		dbClose();
+		
 	}
 	
 	//Note: Parameterized queries protect us from SQL injections attack. 
