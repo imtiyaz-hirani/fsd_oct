@@ -3,7 +3,10 @@ package com.repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.model.Employee;
 
@@ -19,7 +22,7 @@ public class EmployeeRepository {
 		/* Step 1: Load the Driver */
 		try {
 			Class.forName(driver);
-			System.out.println("Driver Loaded...");
+			//System.out.println("Driver Loaded...");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -27,7 +30,7 @@ public class EmployeeRepository {
 		/* Step 2: Establish the connection  */
 		try {
 			con = DriverManager.getConnection(url, userDb, passwordDb);
-			System.out.println("Connection Established");
+			//System.out.println("Connection Established");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -37,7 +40,7 @@ public class EmployeeRepository {
 	public void dbClose() {
 		try {
 			con.close();
-			System.out.println("Connection closed");
+			//System.out.println("Connection closed");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,6 +61,36 @@ public class EmployeeRepository {
 			e.printStackTrace();
 		}
 		dbClose();
+	}
+
+	public List<Employee> getAllEmployee() {
+		dbConnect();
+		String sql="select id,name,department,salary from employee";
+		List<Employee> list = new ArrayList<>();
+		try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rst = pstmt.executeQuery();
+			
+			while(rst.next()) {
+				int id = rst.getInt("id");
+				String name = rst.getString("name");
+				String department = rst.getString("department");
+				double salary = rst.getDouble("salary");
+				
+				Employee employee = new Employee();
+				employee.setId(id);
+				employee.setName(name);
+				employee.setSalary(salary);
+				employee.setDepartment(department);
+				
+				list.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		dbClose();
+		return list;
 	}
 	
 	//Note: Parameterized queries protect us from SQL injections attack. 

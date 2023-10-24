@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.model.Employee;
@@ -40,6 +41,10 @@ public class EmployeeController {
 			case 2: 
 				//View all Employees
 				System.out.println("View all Employees");
+				List<Employee> list= employeeService.getAllEmployee();
+				for( Employee e: list) {
+					System.out.println(e);
+				}
 				break;
 			case 3: 
 				//Delete an Employee
