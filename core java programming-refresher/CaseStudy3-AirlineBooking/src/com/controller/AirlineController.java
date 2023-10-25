@@ -6,7 +6,6 @@ import java.util.Scanner;
 import com.model.InternationalRoutes;
 import com.service.AirlineService;
 
- 
 public class AirlineController {
 	public static void main(String[] args) {
 		AirlineService airlineService = new AirlineService();
@@ -23,5 +22,19 @@ public class AirlineController {
 		for(InternationalRoutes route : list) {
 			System.out.println(route);
 		}
+		System.out.println("------------------------------");
+		System.out.println("Enter flight ID to BOOK the flight");
+		int flightID = sc.nextInt();
+		//validate the flightID 
+		System.out.println("How many passengers are you doing the booking for? ");
+		System.out.println("Enter no. of Adults");
+		int numberAdults = sc.nextInt();
+		System.out.println("Enter no. of Children");
+		int numberChildren = sc.nextInt();
+		System.out.println("Enter no. of Infants");
+		int numberInfants = sc.nextInt();
+		double totalFare = airlineService.computeTotalFare(flightID,numberAdults,numberChildren,numberInfants);
+		System.out.println("Your Total Fare for this booking will be " + totalFare);
+		sc.close();
 	}
 }

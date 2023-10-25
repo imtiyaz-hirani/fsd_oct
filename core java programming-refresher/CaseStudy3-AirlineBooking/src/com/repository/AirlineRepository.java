@@ -82,6 +82,27 @@ public class AirlineRepository {
 		dbClose();
 		return list;
 	}
+
+	public double getDetailsByFlightId(int flightID) {
+		 dbConnect();
+		 String sql="select fare from international_routes where flight_id=?";
+		 double fare = 0; 
+		 try {
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, flightID);
+			ResultSet rst = pstmt.executeQuery();
+			
+			rst.next(); //point rst cursor to first row.
+			fare = rst.getDouble("fare");
+			
+		} catch (SQLException e) {
+			 
+			e.printStackTrace();
+		}
+		 
+		 dbClose();
+		return fare;
+	}
 }
 
 
