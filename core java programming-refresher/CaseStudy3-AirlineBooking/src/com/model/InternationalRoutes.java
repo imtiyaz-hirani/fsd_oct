@@ -56,4 +56,11 @@ public class InternationalRoutes {
 		this.flight_id = flight_id;
 	}
 
+	@Override
+	public String toString() {
+		return "InternationalRoutes [id=" + id + ", source=" + source + ", destination=" + destination + ", duration="
+				+ duration + ", fare=" + fare + ", flight_id=" + flight_id + "]";
+	}
+
+	
 }
