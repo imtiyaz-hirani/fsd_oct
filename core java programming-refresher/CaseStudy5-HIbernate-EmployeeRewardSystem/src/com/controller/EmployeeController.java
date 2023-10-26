@@ -11,8 +11,10 @@ import javax.persistence.Persistence;
 import com.exception.InvalidIdException;
 import com.model.Employee;
 import com.model.Manager;
+import com.model.User;
 import com.service.EmployeeService;
 import com.service.ManagerService;
+import com.service.UserService;
 
 public class EmployeeController {
 	public static void main(String[] args) {
@@ -28,6 +30,7 @@ public class EmployeeController {
 		Scanner sc = new Scanner(System.in);
 		EmployeeService employeeService = new EmployeeService(entityManager);
 		ManagerService managerService = new ManagerService(entityManager);
+		UserService userService = new UserService(entityManager);
 		Manager manager=null;
 		
 		while(true) {
@@ -45,6 +48,7 @@ public class EmployeeController {
 			 entityTransaction.begin();
 			switch(input) {
 			case 1:
+				//read manager info and attach to object
 				 System.out.println("Enter name");
 				 String name = sc.next();
 				 System.out.println("Enter Emp. Code");
@@ -52,6 +56,28 @@ public class EmployeeController {
 				 manager  =new Manager();
 				 manager.setName(name);
 				 manager.setEmpCode(empCode);
+				 
+				 //read manager credentials and attach it to User class and manager class 
+				 System.out.println("Set your username");
+				 String username=sc.next();
+				 System.out.println("Create a password");
+				 String password = sc.next();
+				 System.out.println("Confirm your password");
+				 String repassword = sc.next();
+				 
+				 if(!(password.equals(repassword))) {
+					 System.out.println("Passwords do not match, try again!!");
+					 break; //come out of this case
+				 }
+				 User user = new User();
+				 user.setUsername(username);
+				 user.setPassword(password);
+				 user.setRole("MANAGER");
+				 //save the user  
+				 user = userService.insertUser(user);
+				 manager.setUser(user);
+				 
+				 //insert manager
 				 managerService.insertManager(manager); 
 				 System.out.println("Manager Inserted in DB..");
 				break;
