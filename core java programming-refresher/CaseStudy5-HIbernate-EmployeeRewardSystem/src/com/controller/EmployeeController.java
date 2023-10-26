@@ -38,6 +38,7 @@ public class EmployeeController {
 			System.out.println("1. Insert Manager");
 			System.out.println("2. Insert Employee");
 			System.out.println("3. Show all Employees");
+			System.out.println("4. Manager Login");
 			System.out.println("0. Exit");
 			System.out.println("*************************************");
 			int input = sc.nextInt();
@@ -91,6 +92,26 @@ public class EmployeeController {
 				employee.setSalary(sc.nextDouble());
 				employee.setWalletBalance(0.0);
 				
+				//read employee credentials and attach it to User class and employee class 
+				 System.out.println("Set your username");
+				 username=sc.next();
+				 System.out.println("Create a password");
+				 password = sc.next();
+				 System.out.println("Confirm your password");
+				 repassword = sc.next();
+				 
+				 if(!(password.equals(repassword))) {
+					 System.out.println("Passwords do not match, try again!!");
+					 break; //come out of this case
+				 }
+				 user = new User();
+				 user.setUsername(username);
+				 user.setPassword(password);
+				 user.setRole("EMPLOYEE");
+				 //save the user  
+				 user = userService.insertUser(user);
+				 employee.setUser(user);
+				 
 				System.out.println("Enter Manager ID");
 				try {
 					Manager managerObj = managerService.getManagerById(sc.nextInt());
