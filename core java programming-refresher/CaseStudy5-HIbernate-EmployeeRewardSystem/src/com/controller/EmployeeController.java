@@ -7,6 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import com.exception.InvalidIdException;
+import com.model.Employee;
 import com.model.Manager;
 import com.service.EmployeeService;
 import com.service.ManagerService;
@@ -52,7 +54,25 @@ public class EmployeeController {
 				 managerService.insertManager(manager); 
 				 System.out.println("Manager Inserted in DB..");
 				break;
-			case 2: 
+			case 2:
+				Employee employee = new Employee(); 
+				System.out.println("enter employee name");
+				employee.setName(sc.next());
+				System.out.println("Enter employee code");
+				employee.setEmpCode(sc.next());
+				System.out.println("Enter emp salary");
+				employee.setSalary(sc.nextDouble());
+				employee.setWalletBalance(0.0);
+				
+				System.out.println("Enter Manager ID");
+				try {
+					Manager managerObj = managerService.getManagerById(sc.nextInt());
+					employee.setManager(managerObj);
+					employeeService.insertEmployee(employee);
+					System.out.println("Employee inserted in DB...");
+				} catch (InvalidIdException e) {
+					 System.out.println(e.getMessage());
+				}
 				break;
 			case 3: 
 				break;
@@ -61,8 +81,7 @@ public class EmployeeController {
 			}
 			entityTransaction.commit();
 		}
-		
-		
-		
 	}
 }
+
+//ctrl + shft + O

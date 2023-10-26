@@ -17,7 +17,7 @@ public class Employee {
 	private double walletBalance;
 	
 	@ManyToOne
-	private Manager manager; //injecting Manager in employee  
+	private Manager manager; //injecting Manager in employee  : Has a : Employee has a Manager
 	
 	public int getId() {
 		return id;
