@@ -37,4 +37,10 @@ public class Manager {
 		this.empCode = empCode;
 	}
 
+	@Override
+	public String toString() {
+		return "Manager [id=" + id + ", name=" + name + ", empCode=" + empCode + "]";
+	}
+
+	
 }

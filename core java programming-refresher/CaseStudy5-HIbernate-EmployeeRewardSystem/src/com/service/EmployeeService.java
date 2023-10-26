@@ -1,6 +1,9 @@
 package com.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.model.Employee;
 
@@ -17,4 +20,14 @@ public class EmployeeService {
 		
 	}
 
+	public List<Employee> getAllEmployee() {
+		Query query = entityManager.createNativeQuery("select * from employee", Employee.class);
+		return query.getResultList();
+	}
+
 }
+
+
+
+
+

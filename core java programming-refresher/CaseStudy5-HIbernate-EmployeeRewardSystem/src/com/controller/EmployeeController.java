@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.List;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
@@ -75,6 +76,8 @@ public class EmployeeController {
 				}
 				break;
 			case 3: 
+				List<Employee> list = employeeService.getAllEmployee();
+				list.stream().forEach(e->System.out.println(e));
 				break;
 			default: 
 				System.out.println("Invalid input given, try again!!");		
