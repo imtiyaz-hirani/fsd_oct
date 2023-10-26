@@ -126,6 +126,21 @@ public class EmployeeController {
 				List<Employee> list = employeeService.getAllEmployee();
 				list.stream().forEach(e->System.out.println(e));
 				break;
+			case 4:
+				System.out.println("Enter the username");
+				username= sc.next();
+				System.out.println("Enter password");
+				password=sc.next();
+				String role="MANAGER";
+				boolean status = userService.login(username,password,role);
+				if(status == true) {
+					System.out.println("Welcome " + username);
+					
+				}
+				else {
+					System.out.println("Invalid Username and Password, Try again..");
+				}
+				break; 
 			default: 
 				System.out.println("Invalid input given, try again!!");		
 			}
