@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Manager {
@@ -13,6 +14,9 @@ public class Manager {
 	private String name;
 	private String empCode;
 
+	@OneToOne
+	private User user; 
+	
 	public int getId() {
 		return id;
 	}
@@ -37,10 +41,19 @@ public class Manager {
 		this.empCode = empCode;
 	}
 
-	@Override
-	public String toString() {
-		return "Manager [id=" + id + ", name=" + name + ", empCode=" + empCode + "]";
+	public User getUser() {
+		return user;
 	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Manager [id=" + id + ", name=" + name + ", empCode=" + empCode + ", user=" + user + "]";
+	}
+
+	 
 	
 }

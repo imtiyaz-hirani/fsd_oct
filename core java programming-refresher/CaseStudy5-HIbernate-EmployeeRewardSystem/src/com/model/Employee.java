@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity  //<-- this will create table employee in the DB 
 public class Employee {
@@ -18,6 +19,9 @@ public class Employee {
 	
 	@ManyToOne
 	private Manager manager; //injecting Manager in employee  : Has a : Employee has a Manager
+	
+	@OneToOne
+	private User user;
 	
 	public int getId() {
 		return id;
@@ -67,11 +71,20 @@ public class Employee {
 		this.manager = manager;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", empCode=" + empCode + ", salary=" + salary
-				+ ", walletBalance=" + walletBalance + ", manager=" + manager + "]";
+				+ ", walletBalance=" + walletBalance + ", manager=" + manager + ", user=" + user + "]";
 	}
 
+	 
 	
 }
