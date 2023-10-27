@@ -39,6 +39,8 @@ public class EmployeeController {
 			System.out.println("2. Insert Employee");
 			System.out.println("3. Show all Employees");
 			System.out.println("4. Manager Login");
+			System.out.println("5. Employee Login");
+			
 			System.out.println("0. Exit");
 			System.out.println("*************************************");
 			int input = sc.nextInt();
@@ -135,7 +137,9 @@ public class EmployeeController {
 				boolean status = userService.login(username,password,role);
 				if(status == true) {
 					System.out.println("Welcome " + username);
-					
+					//show menu to manager 
+					System.out.println("1. View all Employees reporting you");
+					System.out.println("2. Assign Points");
 				}
 				else {
 					System.out.println("Invalid Username and Password, Try again..");
