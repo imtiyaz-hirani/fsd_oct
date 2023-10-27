@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import com.enums.Role;
+import com.exception.UserNotFoundException;
 import com.model.Executive;
 import com.model.FundCompany;
 import com.model.User;
@@ -95,8 +96,23 @@ public class FinancialController {
 				entityTransaction.commit();
 
 			}
-		} else {
-			System.out.println("Invalid Credentials");
+		} 
+		else {
+			 try {
+				User user = userService.login(username,password);
+				if(user.getRole().equals(Role.EXECUTIVE)) {
+					System.out.println("Welcome Executive :" + user.getUsername());
+					//menu from executive 
+				}
+				else
+				if(user.getRole().equals(Role.FUND_COMPANY)){
+					System.out.println("Welcome company :" + user.getUsername());
+					//menu from company
+				}
+				
+			} catch (UserNotFoundException e) {
+				 System.out.println(e.getMessage());
+			}
 		}
 
 	}
