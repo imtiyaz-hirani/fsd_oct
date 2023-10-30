@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller //this makes this class a controller class. 
 public class MainController {
-
-	static {
-		System.out.println("STEP 3. Controller called...");
-	}
+ 
 	
 	@RequestMapping("/")
 	public String home() {
@@ -18,6 +15,11 @@ public class MainController {
 	@RequestMapping("/contact")
 	public String contact() {
 		return "contact";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
 	}
 }
 //WEB-INF/jsps/home.jsp
