@@ -94,7 +94,6 @@ public class FinancialController {
 				fundCompanyService.insertCompany(fundCompany);
 				System.out.println("Fund Company added to the system..");
 				entityTransaction.commit();
-
 			}
 		} 
 		else {
