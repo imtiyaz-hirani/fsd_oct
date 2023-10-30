@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller //this makes this class a controller class. 
 public class MainController {
- 
 	
 	@RequestMapping("/")
 	public String home() {

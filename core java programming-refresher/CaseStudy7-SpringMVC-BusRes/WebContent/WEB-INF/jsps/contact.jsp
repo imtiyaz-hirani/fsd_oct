@@ -8,5 +8,6 @@
 </head>
 <body>
 <h1>Contact</h1>
+<jsp:include page="header.jsp"></jsp:include>
 </body>
 </html>
