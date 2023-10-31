@@ -51,6 +51,7 @@ public class SearchRepository {
 				dto.setBusOperatorName(rst.getString("name"));
 				dto.setDoj(rst.getString("doj"));
 				dto.setFare(rst.getDouble("fare"));
+				dto.setNoOfHours(rst.getInt("noOfHours"));
 				return dto;
 			} 
 		};

@@ -24,12 +24,13 @@ public class SearchController {
 		String destination =request.getParameter("destination");
 		String doj =request.getParameter("doj");
 		
-		System.out.println(source + "---" + destination + "---" + doj);
+	//	System.out.println(source + "---" + destination + "---" + doj);
 		/* Give these inputs to Service class and fetch the busses matching the inputs */
 		List<SearchDto> list = searchService.fetchBuses(source,destination,doj);
 		
-		list.stream().forEach(e-> System.out.println(e));
+		//list.stream().forEach(e-> System.out.println(e));
 		/* Give the result as a List to searchResult jsp for display */
+		request.setAttribute("list_result", list);
 		return "searchResult";
 	} 
 }
