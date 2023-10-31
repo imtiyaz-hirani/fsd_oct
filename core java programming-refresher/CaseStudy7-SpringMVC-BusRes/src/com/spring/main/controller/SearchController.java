@@ -1,11 +1,14 @@
 package com.spring.main.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.spring.main.dto.SearchDto;
 import com.spring.main.service.SearchService;
 
 @Controller
@@ -23,7 +26,9 @@ public class SearchController {
 		
 		System.out.println(source + "---" + destination + "---" + doj);
 		/* Give these inputs to Service class and fetch the busses matching the inputs */
-		searchService.fetchBuses(source,destination,doj);
+		List<SearchDto> list = searchService.fetchBuses(source,destination,doj);
+		
+		list.stream().forEach(e-> System.out.println(e));
 		/* Give the result as a List to searchResult jsp for display */
 		return "searchResult";
 	} 

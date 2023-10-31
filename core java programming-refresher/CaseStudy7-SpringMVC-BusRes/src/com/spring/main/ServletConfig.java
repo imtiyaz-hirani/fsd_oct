@@ -34,7 +34,8 @@ public class ServletConfig implements WebMvcConfigurer{
 		String url="jdbc:mysql://localhost:3306/hex_fsd_oct_c7";
 		String username="root";
 		String password="";
-		DataSource dataSource = new DriverManagerDataSource(url, username, password);
+		DriverManagerDataSource dataSource = new DriverManagerDataSource(url, username, password);
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		return dataSource;
 	}
 }
