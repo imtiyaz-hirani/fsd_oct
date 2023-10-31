@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.spring.main.controller"})
+@ComponentScan(basePackages = {"com.spring.main.controller","com.spring.main.service","com.spring.main.repository"})
 public class ServletConfig implements WebMvcConfigurer{
 
 	static {
