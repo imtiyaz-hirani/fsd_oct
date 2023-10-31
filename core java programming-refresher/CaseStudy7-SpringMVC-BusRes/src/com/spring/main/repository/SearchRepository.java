@@ -22,8 +22,8 @@ public class SearchRepository {
 
 	// : connect to DataSource object that i registered with you during build
 	// using @Bean annotation
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
+	@Autowired  
+	public void setDataSource(DataSource dataSource) { //DI
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 

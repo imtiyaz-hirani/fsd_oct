@@ -33,4 +33,9 @@ public class SearchController {
 		request.setAttribute("list_result", list);
 		return "searchResult";
 	} 
+	
+	@RequestMapping("/book")
+	public void book() {
+		
+	}
 }

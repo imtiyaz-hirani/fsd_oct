@@ -80,7 +80,7 @@
 			<td><%=dto.getNoOfHours()%></td>
 			<td><%=dto.getFare()%></td>
 			<td><%=dto.getDoj()%></td>
-			<td><button>BOOK</button></td>
+			<td><a href="<%=request.getContextPath()%>/book">BOOK</a></td>
 		</tr>
 
 		<%
