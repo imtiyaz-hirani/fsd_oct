@@ -12,7 +12,7 @@ public class SearchService {
 	private SearchRepository searchRepository;
 	
 	public void fetchBuses(String source, String destination, String doj) {
-		
+		searchRepository.fetchBuses(source,destination,doj);
 		
 	}
 
