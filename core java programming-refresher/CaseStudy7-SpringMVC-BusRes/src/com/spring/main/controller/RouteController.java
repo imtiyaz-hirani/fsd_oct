@@ -11,7 +11,7 @@ import com.spring.main.dto.RouteDto;
 import com.spring.main.service.RouteService;
 
 @Controller
-public class RouteController {
+public class RouteController {  
 
 	@Autowired
 	private RouteService routeService; //DI

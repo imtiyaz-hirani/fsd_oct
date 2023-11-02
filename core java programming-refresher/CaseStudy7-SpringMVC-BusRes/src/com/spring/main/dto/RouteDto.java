@@ -1,6 +1,6 @@
 package com.spring.main.dto;
 
-public class RouteDto {
+public class RouteDto { 
 	private int bus_id;
 	private String source;
 	private String destination;

@@ -2,10 +2,7 @@ package com.spring.main.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +13,7 @@ import org.springframework.stereotype.Component;
 import com.spring.main.dto.RouteDto;
 
 @Component
-public class RouteRepository {
+public class RouteRepository { //15.23
 
 	private NamedParameterJdbcTemplate jdbc; 
 	 
@@ -24,8 +21,7 @@ public class RouteRepository {
 	public void setDataSource(DataSource dataSource) {
 		 this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
-
-
+	
 	public List<RouteDto> getAllRoutes() {
 		 String sql="select b.id as bus_id,b.source, b.destination,"
 		 		+ " v.name as bus_operator,v.city as operator_city,bs.noOfHours, "
@@ -46,10 +42,8 @@ public class RouteRepository {
 				dto.setNoOfHours(rst.getInt("noOfHours"));
 				dto.setFare(rst.getDouble("fare"));
 				return dto;
-			}
-			 
+			} 
 		};
 		return jdbc.query(sql, rowMapper);
 	}
-
 }

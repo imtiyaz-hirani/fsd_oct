@@ -9,7 +9,7 @@ import com.spring.main.dto.RouteDto;
 import com.spring.main.repository.RouteRepository;
 
 @Service
-public class RouteService {
+public class RouteService { 
 
 	@Autowired
 	private RouteRepository routeRepository;
