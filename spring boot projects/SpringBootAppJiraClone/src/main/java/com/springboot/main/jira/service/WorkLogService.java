@@ -1,5 +1,7 @@
 package com.springboot.main.jira.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,11 @@ public class WorkLogService {
 	
 	public WorkLog insert(WorkLog workLog) {
 		return workLogRepository.save(workLog);
+	}
+
+	public List<WorkLog> getWorkLogsWithTaskByEmployeeId(int eid) {
+		
+		return workLogRepository.findByEmployeeId(eid);
 	}
 
 }

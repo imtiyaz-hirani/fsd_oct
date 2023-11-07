@@ -1,8 +1,10 @@
 package com.springboot.main.jira.controller;
 
-import org.hibernate.boot.model.naming.IllegalIdentifierException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +14,11 @@ import com.springboot.main.jira.exception.InvalidIdException;
 import com.springboot.main.jira.model.Employee;
 import com.springboot.main.jira.model.Project;
 import com.springboot.main.jira.model.Task;
+import com.springboot.main.jira.model.WorkLog;
 import com.springboot.main.jira.service.EmployeeService;
 import com.springboot.main.jira.service.ProjectService;
 import com.springboot.main.jira.service.TaskService;
+import com.springboot.main.jira.service.WorkLogService;
 
 @RestController
 public class TaskController {
@@ -27,6 +31,9 @@ public class TaskController {
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private WorkLogService workLogService;
 	
 	@PostMapping("/task/{pid}/{eid}")
 	public ResponseEntity<?> createTask(@PathVariable("pid") int pid, 
@@ -50,5 +57,10 @@ public class TaskController {
 		catch(InvalidIdException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+	@GetMapping("/worklog/task/{eid}")
+	public List<WorkLog> getWorkLogsWithTaskByEmployeeId(@PathVariable("eid") int eid){
+		
+		return workLogService.getWorkLogsWithTaskByEmployeeId(eid); 
 	}
 }

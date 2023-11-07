@@ -16,14 +16,14 @@ public class WorkLog {
 	private int id; 
 	
 	@OneToOne
-	private Employee employee; 
+	private Employee employee; //findByEmployeeId(eid)
 	
 	@OneToOne
-	private Task task; 
+	private Task task;  //findByTaskId(tid)
 	
-	private String log; 
+	private String log;  //findByLog(log)
 	
-	private LocalDate logDate;
+	private LocalDate logDate; //findByLogDate(logDate)
 
 	public int getId() {
 		return id;
