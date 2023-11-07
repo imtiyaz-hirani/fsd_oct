@@ -20,10 +20,10 @@ public class Task {
 	private int noOfDays;
 	
 	@ManyToOne
-	private Project project; 
+	private Project project;  //id
 	
 	@ManyToOne
-	private Employee employee;
+	private Employee employee; //id
 
 	public int getId() {
 		return id;
