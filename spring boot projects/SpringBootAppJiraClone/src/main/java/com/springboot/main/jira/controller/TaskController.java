@@ -58,9 +58,15 @@ public class TaskController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	@GetMapping("/worklog/task/{eid}")
+	@GetMapping("/worklog/task/employee/{eid}")
 	public List<WorkLog> getWorkLogsWithTaskByEmployeeId(@PathVariable("eid") int eid){
 		
 		return workLogService.getWorkLogsWithTaskByEmployeeId(eid); 
+	}
+	
+	@GetMapping("/worklog/task/{taskID}")
+	public List<WorkLog> getWorklogByTaskId(@PathVariable("taskID") int taskId) {
+		
+		return workLogService.getWorklogByTaskId(taskId);
 	}
 }

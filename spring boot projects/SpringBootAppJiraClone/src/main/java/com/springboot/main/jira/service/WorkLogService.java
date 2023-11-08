@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.main.jira.model.Employee;
 import com.springboot.main.jira.model.WorkLog;
 import com.springboot.main.jira.repository.WorkLogRepository;
 
@@ -21,6 +22,11 @@ public class WorkLogService {
 	public List<WorkLog> getWorkLogsWithTaskByEmployeeId(int eid) {
 		
 		return workLogRepository.findByEmployeeId(eid);
+	}
+
+	public List<WorkLog> getWorklogByTaskId(int taskId) {
+		
+		return workLogRepository.getWorklogByTaskId(taskId);
 	}
 
 }

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Employee {
+public class Manager {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,7 +18,7 @@ public class Employee {
 	private String jobTitle;
 	
 	@OneToOne
-	private User user; 
+	private User user;
 
 	public int getId() {
 		return id;

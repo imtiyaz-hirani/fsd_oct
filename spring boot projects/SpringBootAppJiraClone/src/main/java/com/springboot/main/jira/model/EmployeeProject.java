@@ -9,21 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class WorkLog {
- 
+public class EmployeeProject {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id; 
 	
 	@OneToOne
-	private Employee employee; //findByEmployeeId(eid)
+	private Employee employee; 
 	
 	@OneToOne
-	private Task task;  //findByTaskId(tid)
+	private Project project; 
 	
-	private String log;  //findByLog(log)
-	
-	private LocalDate logDate; //findByLogDate(logDate)
+	private LocalDate assignedDate;
 
 	public int getId() {
 		return id;
@@ -41,30 +39,21 @@ public class WorkLog {
 		this.employee = employee;
 	}
 
-	public Task getTask() {
-		return task;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setTask(Task task) {
-		this.task = task;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
-	public String getLog() {
-		return log;
+	public LocalDate getAssignedDate() {
+		return assignedDate;
 	}
 
-	public void setLog(String log) {
-		this.log = log;
+	public void setAssignedDate(LocalDate assignedDate) {
+		this.assignedDate = assignedDate;
 	}
-
-	public LocalDate getLogDate() {
-		return logDate;
-	}
-
-	public void setLogDate(LocalDate logDate) {
-		this.logDate = logDate;
-	}
-	
 	
 	
 }
