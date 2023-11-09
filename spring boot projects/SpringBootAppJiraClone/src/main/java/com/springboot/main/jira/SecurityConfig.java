@@ -3,6 +3,7 @@ package com.springboot.main.jira;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,8 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		System.out.println("configure....called...");
 		 auth.authenticationProvider(getProvider());
-		 
-		 
 	}
 	
 	@Override
@@ -33,12 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		 http
 		 .authorizeRequests()
 		 .antMatchers("/employee/add").permitAll()
+		 .antMatchers(HttpMethod.GET,"/user/login").authenticated()
 		 .anyRequest().authenticated()
 		 .and().httpBasic()
 		 .and()
 		 .csrf().disable()
 		 .cors().disable();
-		 
+		 //Next: Role Based Access
 	}
 	
 	@Bean
@@ -53,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		dao.setPasswordEncoder(getEncoder());
 		//from here.. i want spring to go to my database and fetch users. 
 		dao.setUserDetailsService(userService);  //UserDetailsService : UserService
-
 		return dao; 
 	}
 	
