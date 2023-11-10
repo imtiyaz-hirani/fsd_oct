@@ -14,7 +14,9 @@ public class FAQUtility {
 	 * map is for saving username as key and 
 	 * role as value of that key 
 	 *  */
-	public FAQUtility() {
+	private static FAQUtility utility = new FAQUtility(); //100X
+	
+	private FAQUtility() {
 		map=new HashMap<>();
 		map.put("harry", "CUSTOMER");
 		map.put("frodo", "EXECUTIVE");
@@ -23,6 +25,10 @@ public class FAQUtility {
 	/* When the object of this class is created, constructor will be called and
 	 * HashMap will be populated with values. 
 	 * */
+	
+	public static FAQUtility getInstance(){
+		return utility;
+	}
 	
 	public String getRoleByUsername(String username) {
 		String role = map.get(username);

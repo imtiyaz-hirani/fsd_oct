@@ -6,7 +6,7 @@ Sprint Call
 Split in group of 2 participants:
 each group will get a Project Case study to implement. 
 After every week, they will be having mini demo of the work they have done. 
-On daily basis, each group will have technical discussion with the training from 4.15-6 pm 
+On daily basis, each group will have technical discussion with the trainer from 4.15-6 pm 
 
 Project Titles
 =================

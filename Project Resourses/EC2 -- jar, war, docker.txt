@@ -1,0 +1,84 @@
+EC2 --> jar, war, docker
+
+AWS Elastic Bean Stalk  : Create Application 
+
+--> VPC 
+--> IAM - Role - Permissions 
+ 
+Step 0: 
+IN your application, change the port no. to 5000. As AWS uses Nginx to run the application and that by default works on 5000. 
+
+Build the app using Maven Install, and test jar file using command: 
+
+java -jar <jarfile-name>
+
+
+Step 1: Elastic Bean Stalk 
+	--> Create Application
+	--> Create a Domain (rdsecapp.ap-south-1.elasticbeanstalk.com) 
+	--> Platform
+	    jar: java, docker image:docker, war: tomcat 
+	--> Select Correto 8 if you are using JDK 1.8.  
+	--> Upload jar file from local file system 
+click next 
+Step 2: 
+Configure service access 
+[you must a create a service role, and attach proper permission to it.]
+
+	--> Create role 
+	--> Select UseCase: EC2
+	--> Attach permission to the role 
+	    1. AWSElasticBeanstalkEnhancedHealth
+	    2. AWSElasticBeanstalkWebTier	
+	--> role name: hex_oct_ec2
+
+Click Create Role
+
+Step 3: 
+Go back to Bean Stalk Service Access Tab and In Existing Service Role, select the role that you just created(you might have to press refresh button given there)
+
+IN EC2 instance profile drop down, select the same above role. 
+
+Step 3: Create a custom VPC: Virtual Private Cloud 
+
+Search for VPC in console serach bar and click on "create VPC" : hex-vpc
+
+CIDR block: 10.0.0.0/28 - reserves 16 IPs 
+AZs: 1
+Public subnet: 1
+Private Subnet: 0
+
+From the drop down: select the VPC that you created : hex-vpc
+
+IN Instance Setting, select the subnet 
+
+Step 4: Configure instance traffic and scaling
+
+In Instance types, Only select t3.micro
+
+Step 5: Configure updates, monitoring, and logging
+
+IN Health reporting, select Basic
+
+Deselect Managed Updates.
+
+
+Click Submit and Good luck ;)
+
+
+
+
+S3 Bucket 
+
+
+
+Builder Design Pattern
+======================
+
+
+
+
+
+
+
+

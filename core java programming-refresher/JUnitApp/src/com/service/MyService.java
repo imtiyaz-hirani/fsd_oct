@@ -38,15 +38,30 @@ public class MyService {
 	}
 	
 	public List<FAQDto> displayFAQ(String username){
-		FAQUtility utility = new FAQUtility();
-		String role = utility.getRoleByUsername(username);
-		return utility.getFAQByRole(role);
+		FAQUtility faqUtility= FAQUtility.getInstance();
+		String role = faqUtility.getRoleByUsername(username);
+		return faqUtility.getFAQByRole(role);
 	}
 }
 
+/* 
+ * Reference: FAQUtility utility
+ * Object: new FAQUtility();
+ * 
+ * References go on stack. 
+ * Objects are saved in the Heap 
+ * 
+ * STACK						HEAP          [RAM:64mb]	-- GC: Garbage Collector 
+ * 						100X:
+ * 						200X:
+ * 						300X: 
+ * */
 
+//6 AM: GC Truck : collects 
 
+//come in: System.gc() - clean the garbage 
 
+//garbage? : garbage are those objects that are inactive. not pointed to from the stack. 
 
 
 
