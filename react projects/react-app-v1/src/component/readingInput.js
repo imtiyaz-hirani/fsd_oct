@@ -30,12 +30,24 @@ function ReadingInput(){
         if(user.name === ''){
             setNameMsg('name is required')
             return false
-        }else{
+        }
+        else 
+        if(!(user.name.match(/(^[a-zA-Z ]+$)/))){
+            console.log('line 36...')
+            setNameMsg('small and capital characters(az- A-Z) with spaces are allowed')
+            return false
+        }
+        else{
             setNameMsg('')
         }
 
         if(user.email === ''){
             setEmailMsg('email is required')
+            return false
+        }
+        else 
+        if(!user.email.match(/(^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-_]+\.[a-zA-Z]+$)/)){ //a@b.com
+            setEmailMsg('email should be valid: ex. john@example.com')
             return false
         }
         else{
@@ -44,6 +56,11 @@ function ReadingInput(){
 
         if(user.password === ''){
             setPasswordMsg('password is required')
+            return false
+        }
+        else 
+        if(!user.password.match(/(^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$)/)){
+            setPasswordMsg('password must follow following rules: one special char, atleast captial letter, atleast 1 digit0-9')
             return false
         }
         else{
