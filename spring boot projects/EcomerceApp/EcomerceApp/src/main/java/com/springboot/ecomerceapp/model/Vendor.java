@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 //JPA: Java Persistence API 
 
@@ -22,6 +23,8 @@ public class Vendor { //<-- tablename: vendor
 	@Column(nullable = false)
 	private String city;
 	 
+	@OneToOne
+	private User user; 
 	public int getId() {
 		return id;
 	}
@@ -44,6 +47,14 @@ public class Vendor { //<-- tablename: vendor
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	} 
 	
 	

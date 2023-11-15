@@ -1,6 +1,7 @@
 package com.springboot.ecomerceapp.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,6 +27,11 @@ public class ProductCustomer {
 	
 	@Column(name = "purchase_date")
 	private LocalDate purchaseDate;
+	
+	@Column(name = "purchase_time")
+	private LocalTime purchaseTime; 
+	
+	private int quantity; 
 
 	public int getId() {
 		return id;
@@ -57,6 +63,22 @@ public class ProductCustomer {
 
 	public void setPurchaseDate(LocalDate purchaseDate) {
 		this.purchaseDate = purchaseDate;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public LocalTime getPurchaseTime() {
+		return purchaseTime;
+	}
+
+	public void setPurchaseTime(LocalTime purchaseTime) {
+		this.purchaseTime = purchaseTime;
 	} 
 	
 	

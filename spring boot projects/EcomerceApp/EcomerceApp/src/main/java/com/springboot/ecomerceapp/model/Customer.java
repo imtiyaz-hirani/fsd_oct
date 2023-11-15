@@ -20,6 +20,9 @@ public class Customer {
 	
 	@OneToOne
 	private Address address;
+	
+	@OneToOne
+	private User user; 
 
 	public int getId() {
 		return id;
@@ -59,6 +62,14 @@ public class Customer {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	} 
 	
 	

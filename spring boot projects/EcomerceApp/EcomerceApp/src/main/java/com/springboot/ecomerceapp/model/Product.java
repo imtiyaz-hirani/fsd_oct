@@ -12,22 +12,22 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Product {
+public class Product { //p
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id; 
+	private int id;  //findById(id)
 	
 	@Column(nullable = false)
-	private String title; 
+	private String title; //findByTitle(title)
 	
-	private double price; 
+	private double price; //findByPrice(price): List<Product>
 	
 	@Column(length = 2000)
 	private String description; 
 	
 	@ManyToOne
-	private Vendor vendor;
+	private Vendor vendor; //findByVendorId(vid) : List<Product> : findByVendorName(vname)
 	
 	public int getId() {
 		return id;

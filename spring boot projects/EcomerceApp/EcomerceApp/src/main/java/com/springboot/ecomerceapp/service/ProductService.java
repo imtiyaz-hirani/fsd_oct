@@ -1,11 +1,13 @@
 package com.springboot.ecomerceapp.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.springboot.ecomerceapp.exception.InvalidIdException;
 import com.springboot.ecomerceapp.model.Product;
 import com.springboot.ecomerceapp.repository.ProductRepository;
 
@@ -25,11 +27,18 @@ public class ProductService {
 
 	public List<Product> getProductsByVendor(int vid) {
 		/* 
-		 * 1. Native Query 
-		 * 2. JPQL 
-		 * 3. JPA Instance methods 
+		 * 1. Native Query : productRepository.getProductsByVendorNative(vid)
+		 * 2. JPQL : productRepository.getProductsByVendorJpql(vid);
+		 * 3. JPA Instance methods : productRepository.findByVendorId(vid)
 		 * */
-		return null;
+		return productRepository.findByVendorId(vid);
+	}
+
+	public Product getProductById(int pid) throws InvalidIdException {
+		Optional<Product> optional =  productRepository.findById(pid);
+		if(!optional.isPresent())
+			throw new InvalidIdException("Product ID Invalid");
+		return optional.get();
 	}
 
 }
