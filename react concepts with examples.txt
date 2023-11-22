@@ -1,0 +1,60 @@
+
+name: [a-zA-Z ]+ 
+small a-z is allowed , capital A-Z is allowed and space is allowed
+
+
+(^[a-zA-Z0-9_ -]+@[a-zA-Z0-9_-]+\.[a-zA-Z]+$)
+
+Part 1: [a-zA-Z0-9_ -]+
+@
+Part 2: [a-zA-Z0-9_-]+ : only one char 
+\.
+Part 3: [a-zA-Z]+
+
+
+
+[a-zA-Z0-9.-_]+ : john, 8-9, 8.8-8, 8
+
+?=.*[A-Z] : atleast one
+?=.*[0-9]: atleast one
+?=.*[$#%@_-.] : atleast one
+[a-zA-Z0-9.-_]+ : your choice
+
+(^(?=.*[A-Z])(?=.*[0-9])(?=.*[$#%@_-.])[a-zA-Z0-9.-_]+$)
+
+
+
+Case Study
+-----------
+Display all Products having 
+
+Filter by Category: _____________  [filter]  => filterProduct(): use filter method and 
+
+id, title, price, category 
+-------------------------------
+1   Apple Iphone  32000  mobile
+2   Oppo A17      17000  mobile
+3   HP Envy	  78000  laptop 
+....
+
+
+products = products.filter(p=>p.category === categoryValue)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
