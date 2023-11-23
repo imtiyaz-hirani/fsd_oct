@@ -1,71 +1,28 @@
-import { useState } from "react";
+ import { Route, Routes } from "react-router";
 import "./App.css";
+import CustomerDashboard from "./components/customer/dashboard";
+import VendorDashboard from "./components/vendor/dashboard";
+import ExecutiveDashboard from "./components/executive/dashboard";
+import Login from "./components/auth/login";
+import Signup from "./components/auth/signup";
+import Logout from "./components/auth/logout";
  
 function App() {
-   const [name,setName] = useState('');
-   const [username,setUsername] = useState('');
-   const [password,setPassword] = useState('');
-   const [nameMsg,setNameMsg] = useState('');
-   const [usernameMsg,setUsernameMsg] = useState('');
-   const [passwordMsg,setPasswordMsg] = useState('');
-
-   const validate = () =>{
-    let isValid = true; 
-
-     if(name === ''){
-        isValid = false
-        setNameMsg('Name is required')
-     }
-
-     if(username === ''){
-      isValid = false
-      setUsernameMsg('username is required')
-   }
-
-   if(password === ''){
-    isValid = false
-    setPasswordMsg('password is required')
- }
-
-     return isValid; 
-   }
+   
   return (
     <div className="App">
-      <h3>Hello React!!!</h3>
-      <hr />
-          <label>Enter name: </label>
-          <input type="text" onKeyUp={(e)=>setName(e.target.value) }></input>
-          <br />
-          <span className="error_msg">{name === ''?nameMsg : ''}</span>
-          <br />
-          <label>Enter Username: </label>
-          <input type="text" onKeyUp={(e)=>setUsername(e.target.value)} ></input>
-          <br />
-          <span  className="error_msg">{username === ''?usernameMsg : ''}</span>
-          <br />
-          <label>Enter PAssword: </label>
-          <input type="text" onKeyUp={(e)=>setPassword(e.target.value)}></input>
-          <br />
-          <span  className="error_msg">{password === ''?passwordMsg : ''}</span>
-          <br />
-          <button onClick={()=>validate()}>Sign Up</button>
-          <br /><br />
-          <div>
-             {name} <br />
-             {username}<br />
-             {password}
-          </div>
+        <Routes>
+          <Route path="/" element={<CustomerDashboard />}></Route>
+          <Route path="/customer/dashboard" element={<CustomerDashboard />}></Route>
+          <Route path="/vendor/dashboard" element={<VendorDashboard />}></Route>
+          <Route path="/executive/dashboard" element={<ExecutiveDashboard />}></Route>
+          <Route path="/auth/login" element={<Login />}></Route>
+          <Route path="/auth/signup" element={<Signup />}></Route>
+          <Route path="/auth/logout" element={<Logout />}></Route>
+        </Routes>
     </div>
-
-  )    
+  );    
 }
  
-export default App;
-
-/** 
- *  (e,)=><div>{e}</div>
- * Each child in a list should have a unique "key" prop
- * 
- * calling a function: increment() -- wrong 
- *   calling a function: ()=>increment() -- right 
- * **/
+export default App;  
+ 
