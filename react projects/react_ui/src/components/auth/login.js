@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function Login(){
     const [username,setUsername] = useState('');
@@ -57,6 +57,12 @@ function Login(){
                     <button className="btn btn-primary" 
                     onClick={()=>doLogin()}>Login</button>
                   </div>
+              </div>
+              <div style={{textAlign: "left"}} className="mt-4">
+                  <span>Don't have an Account 
+                    <button className="button_link" 
+                        onClick={()=>navigate('/auth/signup')}>Sign Up</button>
+                    </span>
               </div>
             </div>
             <div className="col-md-3"></div>
