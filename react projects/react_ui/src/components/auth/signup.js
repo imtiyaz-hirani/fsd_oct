@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Container, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router";
@@ -12,12 +13,38 @@ function Signup() {
     const [state,setState] = useState('');    
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-
+    
+    const [customer, setCustomer ] = useState({});
     const [msg,setMsg] = useState('');
     const navigate = useNavigate();
 
     const doSignUp=()=>{
-
+        //call the api : http://localhost:8082/customer/address/add - POST 
+        let customerObj = {
+            "name": name,
+            "contact":contact,
+            "email":username,
+            "address":{
+                "hno":hno,
+                "street":street,
+                "city":city,
+                "pinCode":pin,
+                "state":state
+            },
+            "user":{
+               "username":username,
+               "password":password
+            }
+        }
+        //console.log(JSON.stringify(customer))
+        axios.post('http://localhost:8082/customer/address/add',customerObj )
+          .then(response=>{
+            setCustomer(response.data)
+            navigate('/auth/login?msg="signup success"')
+          } )
+          .catch(function (error) {
+            setMsg("Issue in processing sign up..")
+          });
     }
   return (
     <div>
@@ -37,7 +64,7 @@ function Signup() {
               </div>
               <div className="card-body">
                 {msg !== "" ? (
-                  <div class="alert alert-danger" role="alert">
+                  <div className="alert alert-danger" role="alert">
                     {msg}
                   </div>
                 ) : (
@@ -116,6 +143,17 @@ function Signup() {
                       onChange={(e) => setPin(e.target.value)}
                     />
                   </div>
+                   {/* Read state */}
+                   <div className="col-md-6">
+                    <label>Enter State:</label>
+                  </div>
+                  <div className="col-md-6 mb-4">
+                    <input
+                      type="text"
+                      className="form-control"
+                      onChange={(e) => setState(e.target.value)}
+                    />
+                  </div>
                   <hr />
                   <div className="col-md-6">
                     <label>Enter Email/Username:</label>
@@ -152,7 +190,7 @@ function Signup() {
                 Have an Account?
                 <button
                   className="button_link"
-                  onClick={() => navigate("/auth/signup")}
+                  onClick={() => navigate("/auth/login")}
                 >
                   Login
                 </button>

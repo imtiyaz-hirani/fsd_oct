@@ -1,21 +1,51 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 
 function Login(){
+    const [param] = useSearchParams();
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-    const [msg,setMsg] = useState('');
+    const [msg,setMsg] = useState(param.get('msg'));
     const navigate = useNavigate();
-    
+    //jsdhfjshfdjhf434jhjhjh = harry@gmail.com:potter@123
     const doLogin=()=>{
-        if(username === 'harry@gmail.com' && password === 'potter@123'){
-            localStorage.setItem('isLoggedIn',true);
-            navigate(localStorage.getItem('url'))
-        }
-        else{
-            setMsg('Invalid Credentials')
-        }
+        let token = window.btoa(username + ':' + password);
+        //console.log(token);
+        axios.post('http://localhost:8082/auth/login',{},{
+          headers:{
+            'Authorization':'Basic ' + token
+          }
+        })
+        .then(function (response) {
+          // handle success
+          localStorage.setItem('username',username)
+          localStorage.setItem('token',token)
+          localStorage.setItem('id',response.data.id)
+          localStorage.setItem('isLoggedIn',true)
+          let role = response.data.role;
+
+          switch(role){
+            case 'CUSTOMER':
+              navigate('/customer/dashboard')
+              break; 
+            case 'VENDOR':
+              navigate('/vendor/dashboard')
+              break;
+            case 'EXECUTIVE':
+              navigate('/executive/dashboard')
+              break;   
+            default: 
+              
+          }
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          // handle error
+          setMsg('Invalid Credentials')
+        });
+         
     }
     return (
       <div className="container mt-4">
@@ -28,8 +58,8 @@ function Login(){
                     <h3>Login</h3>
                 </div>
                 <div className="card-body">
-                    {msg !== ''?
-                          <div class="alert alert-danger" role="alert">
+                    {msg !== '' || msg === null || msg === undefined?
+                          <div className="alert alert-danger" role="alert">
                             {msg}
                         </div>
                     :''}    
