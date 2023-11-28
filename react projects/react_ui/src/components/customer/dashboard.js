@@ -14,6 +14,7 @@ function CustomerDashboard(){
         </div>
         }
         if(param.get('page') === 'products'){
+             
             return <div>
                 <Products />
             </div>
