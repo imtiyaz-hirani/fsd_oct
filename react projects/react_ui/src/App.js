@@ -6,15 +6,14 @@ import ExecutiveDashboard from "./components/executive/dashboard";
 import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
 import Logout from "./components/auth/logout";
- import PostComponent from "./class components/posts";
-import CommentComponent from "./class components/comments";
+ import CommentComponent from "./class components/comments";
  
 function App() {
    
   return (
     <div className="App">
         <Routes>
-          <Route path="/" element={<PostComponent />}></Route>
+          <Route path="/" element={<CustomerDashboard />}></Route>
           <Route path="/posts/comments/:id" element={<CommentComponent />}></Route>
           <Route path="/customer/dashboard" element={<CustomerDashboard />}></Route>
           <Route path="/vendor/dashboard" element={<VendorDashboard />}></Route>

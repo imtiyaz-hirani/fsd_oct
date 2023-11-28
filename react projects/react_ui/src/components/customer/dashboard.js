@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import NavbarComponent from "./components/navbar";
 import Products from "./components/products";
 import Login from "../auth/login";
+import HomeComponent from "./components/home";
 
 function CustomerDashboard(){
     const [param] = useSearchParams();
@@ -9,7 +10,7 @@ function CustomerDashboard(){
     const process = ()=>{
         if(!param.get('page')){
             return  <div>
-             <h1>Dashboard</h1>
+             <HomeComponent />
         </div>
         }
         if(param.get('page') === 'products'){
