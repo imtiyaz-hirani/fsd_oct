@@ -58,7 +58,7 @@ function Login(){
                     <h3>Login</h3>
                 </div>
                 <div className="card-body">
-                    {msg !== '' || msg === null || msg === undefined?
+                    {msg !==  null?
                           <div className="alert alert-danger" role="alert">
                             {msg}
                         </div>

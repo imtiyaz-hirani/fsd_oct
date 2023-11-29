@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Nav, Navbar, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
@@ -9,9 +9,9 @@ function NavbarComponent({func}){ //{1,2,3,4}
 
     const navigate = useNavigate();
     return(
-        <div className="mb-4">
-            <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
+        <div className="mb-4" >
+            <Navbar bg="dark" data-bs-theme="dark" style={{marginLeft: '4px', marginRight:'5px'}}>
+        
           <Navbar.Brand href="#home">MyApp</Navbar.Brand>
           <Navbar.Brand onClick={()=>navigate('/customer/dashboard')}>Customer Dashboard </Navbar.Brand>
           <Nav className="me-auto mr-4">
@@ -36,15 +36,26 @@ function NavbarComponent({func}){ //{1,2,3,4}
       </Form>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           {
-            localStorage.getItem('isLoggedIn')?<Navbar.Text>
-            Signed in as: <a href="#login">Mark Otto</a>
-          </Navbar.Text>: 
-          <button className="btn btn-primary">Login</button>
+            localStorage.getItem('isLoggedIn')?
+            <React.Fragment>
+            <Navbar.Text >
+            Signed in as: <span style={{color: "white"}}> 
+            {localStorage.getItem('username')} 
+            </span>
+          </Navbar.Text>
+          &nbsp;&nbsp;&nbsp;
+          <button className="btn btn-info btn-sm ml-4" onClick={()=>{
+            localStorage.clear();
+            navigate('/auth/login?msg=you have logged out..')
+          }}>Logout</button>
+          </React.Fragment>
+          : 
+          <button className="btn btn-primary" onClick={()=>navigate('/auth/login')}>Login</button>
           }
           
 
         </Navbar.Collapse>
-        </Container>
+         
       </Navbar>
       
         </div>
