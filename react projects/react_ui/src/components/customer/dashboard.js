@@ -3,14 +3,20 @@ import NavbarComponent from "./components/navbar";
 import Products from "./components/products";
 import Login from "../auth/login";
 import HomeComponent from "./components/home";
+import { useState } from "react";
 
 function CustomerDashboard(){
     const [param] = useSearchParams();
+    const [qStr,setQstr] = useState('')
 
+    const searchProducts = (str)=>{
+        console.log('seach func in parent comp called.....' + str)
+        setQstr(str)
+    }
     const process = ()=>{
         if(!param.get('page')){
             return  <div>
-             <HomeComponent />
+             <HomeComponent strVal={qStr}/>
         </div>
         }
         if(param.get('page') === 'products'){
@@ -39,9 +45,10 @@ function CustomerDashboard(){
     }
     return(
         <div>
-            <NavbarComponent />
-            {process()}
-        </div>
+            <NavbarComponent func={searchProducts}/>
+            {process()} 
+        </div> 
+        
     ) 
 }
 
