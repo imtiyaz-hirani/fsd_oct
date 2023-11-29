@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Card, CardBody,  CardSubtitle, CardText, CardTitle, Nav  } from "react-bootstrap";
+import { Button, Card, CardBody,  CardHeader,  CardSubtitle, CardText, CardTitle, Nav  } from "react-bootstrap";
  import SidebarComponent from "./sidebar";
 
 function HomeComponent(){
@@ -27,10 +27,11 @@ function HomeComponent(){
                 <div key={index} className="col-md-4 mb-4">
                   <Card
                     style={{
-                      width: "18rem",
-                      height: "12rem",
+                      width: "90%",
+                      height: "100%",
                     }}
                   >
+                    <CardHeader>Featured</CardHeader>
                     {/* <img alt="Sample" src="https://picsum.photos/300/200" /> */}
                     <CardBody>
                       <CardTitle tag="h5">{p.title}</CardTitle>
