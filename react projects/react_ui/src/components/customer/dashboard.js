@@ -4,6 +4,7 @@ import Products from "./components/products";
 import Login from "../auth/login";
 import HomeComponent from "./components/home";
 import { useState } from "react";
+import AllProducts from "./components/all_products";
 
 function CustomerDashboard(){
     const [param] = useSearchParams();
@@ -18,6 +19,12 @@ function CustomerDashboard(){
             return  <div>
              <HomeComponent strVal={qStr}/>
         </div>
+        }
+        if(param.get('page') === 'all_products'){
+             
+            return <div>
+                <AllProducts />
+            </div>
         }
         if(param.get('page') === 'products'){
              

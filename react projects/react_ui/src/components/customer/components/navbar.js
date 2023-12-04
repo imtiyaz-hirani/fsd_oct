@@ -15,7 +15,8 @@ function NavbarComponent({func}){ //{1,2,3,4}
           <Navbar.Brand href="#home">MyApp</Navbar.Brand>
           <Navbar.Brand onClick={()=>navigate('/customer/dashboard')}>Customer Dashboard </Navbar.Brand>
           <Nav className="me-auto mr-4">
-            <Nav.Link onClick={()=>navigate('/customer/dashboard?page=cart')}>Cart</Nav.Link>
+          <Nav.Link onClick={()=>navigate('/customer/dashboard?page=all_products')}>Products</Nav.Link>
+         <Nav.Link onClick={()=>navigate('/customer/dashboard?page=cart')}>Cart</Nav.Link>
             <Nav.Link onClick={()=>navigate('/customer/dashboard?page=previous_orders')}>Previous Orders</Nav.Link>
           </Nav>
           <Navbar.Collapse className="justify-content-end">

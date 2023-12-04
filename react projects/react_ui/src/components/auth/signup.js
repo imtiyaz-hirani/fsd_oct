@@ -154,6 +154,17 @@ function Signup() {
                       onChange={(e) => setState(e.target.value)}
                     />
                   </div>
+                   {/* upload Image */}
+                   <div className="col-md-6">
+                    <label>Select Profile Pic:</label>
+                  </div>
+                  <div className="col-md-6 mb-4">
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={(e) => setState(e.target.value)}
+                    />
+                  </div>
                   <hr />
                   <div className="col-md-6">
                     <label>Enter Email/Username:</label>
