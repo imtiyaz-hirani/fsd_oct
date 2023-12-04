@@ -1,0 +1,79 @@
+wsl : windows subsystem for linux 
+
+
+Docker Steps and Commands
+=========================
+1. Download and install docker desktop. If it prompts you for wsl, download it and restart docker desktop.
+2. Goto docker hub and create an account and note down ur username/password 
+
+3. create a simple spring boot app with simple hello api. Add a file "Dockerfile" in root location of the project. 
+
+4. Run maven-install and build the jar of your app inside target folder. 
+
+5. type following commands in Dockerfile created earlier: 
+
+FROM openjdk:11
+EXPOSE 8282
+ADD target/dockerApp-0.0.1-SNAPSHOT.jar dockerApp-0.0.1-SNAPSHOT.jar
+ENTRYPOINT [ "java","-jar","/dockerApp-0.0.1-SNAPSHOT.jar" ]
+
+change port no accourding to your apps port no. 
+change jdk version as per ur version
+change jarfile name as per ur jar name from target folder. 
+
+
+6. go to the directory of Dockerfile and run the following command 
+
+docker build -t my-docker-backend-image .
+
+7. Run the docker image . Note: docker images will show you your created image
+
+docker run -it -p 9090:8282 my-docker-backend-image
+
+8. check your api using localhost:8282 or localhost:9090 
+
+9. type: docker login and enter username/password during prompt
+
+9. Retag the image so that it gets uploaded in your user repository on docker hub. 
+
+docker tag my-docker-backend-image imtiyazhirani/my-docker-backend-image
+
+Note: imtiyazhirani is the username. replace it with urs. 
+
+10. Push the image on docker hub and check it in your repositories. 
+
+docker push imtiyazhirani/my-docker-backend-image
+
+11. [Optional]In a separate system, use "docker pull my-docker-backend-image" or pull it and run it from docker desktop .
+
+
+Working with third party docker Images 
+=======================================
+ex. alpine, mysql, postgres
+
+1. docker login
+
+2. docker pull alpine
+
+3. docker images
+
+4. docker container create -it --name myalpinecontainer alpine
+
+myalpinecontainer: name of the coatainer (ur choice)
+alpine: name of the image 
+
+5. docker start myalpinecontainer
+
+6. docker ps : check if container is running. (status: UP)
+
+C:\Users\Admin>docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED              STATUS          PORTS     NAMES
+1d8ff29a131c   alpine    "/bin/sh"   About a minute ago   Up 10 seconds             myalpinecontainer
+
+7. docker run -it 8ca4688f4f35 /bin/sh
+
+imageid: 8ca4688f4f35
+ /bin/sh : command given in image list 
+
+
+
