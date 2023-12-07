@@ -6,11 +6,18 @@ function AllProducts(){
 
     const [page,setPage] = useState(0);
     const [size,] = useState(3);
-    const [products,setProducts] = useState([]);
+    const [products,setProducts] = useState([]); //undefined
 
     useEffect(()=>{
-        axios.get('http://localhost:8082/product/all?page=' + page+ '&size=' + size)
-        .then(response=>setProducts(response.data))
+        // axios.get('http://localhost:8082/product/all?page=' + page+ '&size=' + size)
+        // .then(response=>setProducts(response.data))
+        
+        const getAllProducts = async ()=>{
+          const response = await axios.get('http://localhost:8082/product/all?page=' + page+ '&size=' + size)
+          setProducts(response.data)
+        }
+        getAllProducts();
+      
     },[page,size]);
 
     const getProducts = (direction)=>{
