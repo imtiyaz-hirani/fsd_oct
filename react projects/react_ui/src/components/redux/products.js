@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, updateProductFeature } from "../../store/actions/product";
+import { api } from "../../environment_dev";
 
 function ReduxProduct(){
      const dispatch = useDispatch();
@@ -18,9 +19,10 @@ function ReduxProduct(){
         <h1>All products from Redux Store</h1>
         
         {
-            
             list.map((p,index)=>(
                 <div key={index}>
+                <img  src={`../images/${p.image}`} style={{width: '20%', height:'20%'}} alt='Portrait' />
+                 
                 {p.title}  <br />
                 Price: {p.price} <br />
                 {p.description} <br />
