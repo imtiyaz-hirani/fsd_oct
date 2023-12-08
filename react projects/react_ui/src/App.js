@@ -9,6 +9,7 @@ import Logout from "./components/auth/logout";
  import CommentComponent from "./class components/comments";
 import ReduxProduct from "./components/redux/products";
 import AddProduct from "./components/customer/components/add_product";
+import PrimeComponent from "./components/customer/components/primecomponent";
  
 function App() {
    
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
         <Routes>
           <Route path="/" element={<ReduxProduct />}></Route>
+          <Route path="/prime" element={<PrimeComponent />}></Route>
           <Route path="/add-product" element={<AddProduct />}></Route>
           <Route path="/posts/comments/:id" element={<CommentComponent />}></Route>
           <Route path="/customer/dashboard" element={<CustomerDashboard />}></Route>
